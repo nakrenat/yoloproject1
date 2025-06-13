@@ -1,0 +1,103 @@
+version: '3.8'
+
+services:
+  yolo-detector:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: yolo-detection-service
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+      - MODEL_PATH=/app/yolov8n.pt
+      - USE_ONNX=true
+      - WORKERS=1
+      - LOG_LEVEL=info
+    volumes:
+      # Mount models directory for persistence
+      - ./models:/app/models
+      # Mount test images for easy testing
+      - ./test_images:/app/test_images:ro
+      # Mount logs directory
+      - ./logs:/app/logs
+    networks:
+      - yolo-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
+
+  # Optional: Add Redis for caching (if needed for production scaling)
+  redis:
+    image: redis:7-alpine
+    container_name: yolo-redis-cache
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - yolo-network
+    restart: unless-stopped
+    profiles:
+      - cache
+
+  # Optional: Add monitoring with Prometheus (if needed)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: yolo-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks:
+      - yolo-network
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+  # Optional: Add Grafana for visualization (if needed)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: yolo-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - yolo-network
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+networks:
+  yolo-network:
+    driver: bridge
+    name: yolo-detection-network
+
+volumes:
+  redis-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local 
