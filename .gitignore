@@ -1,0 +1,112 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Model files (large)
+*.pt
+*.onnx
+*.pth
+*.weights
+
+# Docker
+.dockerignore
+
+# Logs
+logs/
+*.log
+
+# Test results
+test_results/
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Pytest
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Large model files (keep only nano)
+yolov8s.pt
+yolov8m.pt
+yolov8l.pt
+yolov8x.pt
+
+# Runtime generated files
+detection_data/
+processed_video_*.mp4
+result_*.jpg
+output_video.mp4
+test_video.mp4
+
+# Test results
+test_results/
+.streamlit/ 
