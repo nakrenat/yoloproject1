@@ -38,8 +38,8 @@ Both applications use the same optimized YOLO models with ONNX acceleration for 
 ### Launch Both Applications
 ```bash
 # Clone repository
-git clone <repository-url>
-cd yolo-detection-platform
+git clone https://github.com/nakrenat/yoloproject1.git
+cd yoloproject1
 
 # Start microservice (task requirement)
 docker-compose up --build
