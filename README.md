@@ -367,7 +367,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### Development Setup
 ```bash
 # Clone and setup development environment
-git clone <repository-url>
+git clone https://github.com/nakrenat/yoloproject1.git
 cd yolo-detection-platform
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
