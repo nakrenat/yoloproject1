@@ -108,7 +108,7 @@ print('Conversion completed: yolov8n.onnx')
 1. **Clone and Setup**:
 ```bash
 git clone https://github.com/nakrenat/yoloproject1.git
-cd yolo-microservice
+cd yoloproject1
 ```
 
 2. **Build and Run**:
